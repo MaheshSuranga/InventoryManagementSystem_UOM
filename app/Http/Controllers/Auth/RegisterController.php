@@ -73,12 +73,32 @@ class RegisterController extends Controller
         ]);
 
         $user->roles()->attach($data['role']);
+
+        if($data['role'] == 1){
+            TO::create([
+                'id' => $user->id,
+                'status' => $data['optradio'],
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'contact' => $data['contact'],
+            ]);
+        }
         
         if($data['role'] == 2){
             Lecturer::create([
                 'id' => $user->id,
                 'status' => $data['optradio'],
                 'designation' => $data['designation'],
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'contact' => $data['contact'],
+            ]);
+        }
+
+        if($data['role'] == 3){
+            Supervisor::create([
+                'id' => $user->id,
+                'status' => $data['optradio'],
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'contact' => $data['contact'],
