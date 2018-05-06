@@ -17,3 +17,19 @@ Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::resource('inventories', 'InventoriesController');
+
+Route::group(['prefix'=>'inventories'],function(){
+    Route::get('/', 'InventoriesController@index');
+
+    Route::get('/create', 'InventoriesController@create')->middleware('can:create-inventory');
+
+    Route::post('/create', 'InventoriesController@store')->middleware('can:create-inventory');
+
+    Route::get('/show/{id}', 'InventoriesController@show');
+
+    Route::get('/{inventory}/edit', 'InventoriesController@edit')->middleware('can:update-inventory');
+
+    Route::post('/{inventory}/update', 'InventoriesController@update')->middleware('can:update-inventory');
+
+    Route::delete('/{inventory}/delete', 'InventoriesController@update')->middleware('can:delete-inventory');
+});

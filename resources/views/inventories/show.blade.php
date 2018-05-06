@@ -2,7 +2,8 @@
 @section('content')
     <a href="/inventories" class="btn btn-default">Go Back</a>
     <h1>{{$inventory->name}}</h1>
-    <div class="well" style="margin:20px 250px">
+    <img style="width:100%" src="/storage/cover_images/{{$inventory->cover_image}}" alt="">
+    <div class="well" style="margin:20px 150px">
         <table class="table table-striped">
             <tbody>
                 <tr>
@@ -32,14 +33,16 @@
             </tbody>
         </table>
     </div>
+    <hr>
     @if(!auth::guest())
-        @if(auth::user()->id == 1)
+        @can('update-inventory')
             <a href="/inventories/{{$inventory->id}}/edit" class="btn btn-default">Edit</a>
-
+        @endcan
+        @can('delete-inventory')
             {!!Form::open(['action' => ['InventoriesController@destroy', $inventory->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
                 {{Form::hidden('_method', 'DELETE')}}
                 {{Form::submit('Delete',['class' => 'btn btn-danger'])}}
             {!!Form::close()!!}
-        @endif
+        @endcan
     @endif
 @endsection

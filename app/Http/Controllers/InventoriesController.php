@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Inventory;
 
 class InventoriesController extends Controller
@@ -27,7 +28,7 @@ class InventoriesController extends Controller
      */
     public function create()
     {
-        //
+        return view('inventories.create');
     }
 
     /**
@@ -38,7 +39,36 @@ class InventoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'brand' => 'required',
+            'serial' => 'required',
+            'price' => 'required',
+            'cover_image' => 'image|nullable|max:1999'
+        ]);
+
+        if($request->hasFile('cover_image')){
+            $fileNamewithExt = $request->file('cover_image')->getClientOriginalName();
+            $fileName = pathinfo($fileNamewithExt, PATHINFO_FILENAME);
+            $extension = $request->file('cover_image')->getClientOriginalExtension();
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+        }else{
+            $fileNameToStore = 'noimage.jpg';
+        }
+
+        $inventory = new Inventory;
+        $inventory->name = $request->input('name');
+        $inventory->brand = $request->input('brand');
+        $inventory->serialno = $request->input('serial');
+        $inventory->price = $request->input('price');
+        $inventory->description = $request->input('description');
+        $inventory->purchaseddate = $request->input('purchase');
+        $inventory->availabilty = 1;
+        $inventory->cover_image = $fileNameToStore;
+        $inventory->save();
+
+        return redirect('/posts')->with('success','Post Created');
     }
 
     /**
@@ -62,7 +92,11 @@ class InventoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $inventory = Inventory::find($id);
+        if(!auth()->user()->hasAccess(['update-inventory'])){
+            return redirect('/inventories')->with('error','Unauthorized Page');
+        }
+        return view('inventories.edit')->with('inventory',$inventory);
     }
 
     /**
@@ -74,7 +108,36 @@ class InventoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'brand' => 'required',
+            'serial' => 'required',
+            'price' => 'required',
+        ]);
+
+        if($request->hasFile('cover_image')){
+            $fileNamewithExt = $request->file('cover_image')->getClientOriginalName();
+            $fileName = pathinfo($fileNamewithExt, PATHINFO_FILENAME);
+            $extension = $request->file('cover_image')->getClientOriginalExtension();
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+        }
+
+        $inventory = Inventory::find($id);
+        $inventory->name = $request->input('name');
+        $inventory->brand = $request->input('brand');
+        $inventory->serialno = $request->input('serial');
+        $inventory->price = $request->input('price');
+        $inventory->description = $request->input('description');
+        $inventory->purchaseddate = $request->input('purchase');
+        $inventory->availabilty = 1;
+        $inventory->cover_image = $fileNameToStore;
+        if($request->hasFile('cover_image')){
+            $inventory->cover_image = $fileNameToStore;
+        }
+        $inventory->save();
+
+        return redirect('/inventories')->with('success','Inventory Updated');
     }
 
     /**
@@ -90,10 +153,10 @@ class InventoriesController extends Controller
             return redirect('/inventories')->with('error','Unauthorized Page');
         }
         if($post->cover_image != 'noimage.jpg'){
-            Storage::delete('public/cover_image/'.$post->cover_image);
+            Storage::delete('public/cover_image/'.$inventory->cover_image);
         }
-        $post->delete();
-        return redirect('/posts')->with('success', 'Post Removed');
+        $inventory->delete();
+        return redirect('/inventories')->with('success', 'Inventory Removed');
         //
     }
 }
