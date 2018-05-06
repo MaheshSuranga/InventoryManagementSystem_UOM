@@ -149,10 +149,10 @@ class InventoriesController extends Controller
     public function destroy($id)
     {
         $inventory = Inventory::find($id);
-        if(auth()->user()->id != 1){
+        if(!auth()->user()->hasAccess(['delete-inventory'])){
             return redirect('/inventories')->with('error','Unauthorized Page');
         }
-        if($post->cover_image != 'noimage.jpg'){
+        if($inventory->cover_image != 'noimage.jpg'){
             Storage::delete('public/cover_image/'.$inventory->cover_image);
         }
         $inventory->delete();

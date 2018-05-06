@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Role;
+use App\Lecturer;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -72,6 +73,17 @@ class RegisterController extends Controller
         ]);
 
         $user->roles()->attach($data['role']);
+        
+        if($data['role'] == 2){
+            Lecturer::create([
+                'id' => $user->id,
+                'status' => $data['optradio'],
+                'designation' => $data['designation'],
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'contact' => $data['contact'],
+            ]);
+        }
 
         return $user;
     }
