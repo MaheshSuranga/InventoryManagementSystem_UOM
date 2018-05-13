@@ -20,8 +20,8 @@
                                 </li>
                             </ul>
                         </li>
-                        <li {{ (Request::is('*buttons') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('buttons' ) }}">Issue Inventory</a>
+                        <li {{ (Request::is('*inventory/issue') ? 'class="active"' : '') }}>
+                            <a href="{{ url ('inventory/issue' ) }}">Issue Inventory</a>
                         </li>
                         <li {{ (Request::is('*inventories/create') ? 'class="active"' : '') }}>
                             <a href="{{ url('inventories/create') }}">Add New Inventory</a>

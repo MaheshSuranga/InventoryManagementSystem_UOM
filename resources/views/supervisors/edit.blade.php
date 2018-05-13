@@ -3,6 +3,7 @@
     Edit Supervisor's Details
 @endsection
 @section('section')
+<div class="well" style="margin:20px 20px">
     {!! Form::open(['action' => ['SupervisorsController@update', $supervisor->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
             {{Form::label('status','Mr.')}}
@@ -32,4 +33,5 @@
         {{Form::hidden('_method','PUT')}}
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
+</div>
 @endsection

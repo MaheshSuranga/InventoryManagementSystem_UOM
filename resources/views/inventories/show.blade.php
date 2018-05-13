@@ -2,8 +2,8 @@
 @section('content')
     <a href="/inventories" class="btn btn-default">Go Back</a>
     <h1>{{$inventory->name}}</h1>
-    <img style="width:100%" src="/storage/cover_images/{{$inventory->cover_image}}" alt="">
-    <div class="well" style="margin:20px 150px">
+    <img class="col-md-4" src="/storage/cover_images/{{$inventory->cover_image}}" alt="">
+    <div class="well col-md-8">
         <table class="table table-striped">
             <tbody>
                 <tr>

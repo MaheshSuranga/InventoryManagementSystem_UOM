@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Inventory;
+use App\Lecturer;
+use App\Supervisor;
 
 class InventoriesController extends Controller
 {
@@ -65,11 +67,11 @@ class InventoriesController extends Controller
         $inventory->price = $request->input('price');
         $inventory->description = $request->input('description');
         $inventory->purchaseddate = $request->input('purchase');
-        $inventory->availabilty = 1;
+        $inventory->availability = 1;
         $inventory->cover_image = $fileNameToStore;
         $inventory->save();
 
-        return redirect('/posts')->with('success','Post Created');
+        return redirect('/inventories')->with('success','Inventory Created');
     }
 
     /**
@@ -131,7 +133,6 @@ class InventoriesController extends Controller
         $inventory->price = $request->input('price');
         $inventory->description = $request->input('description');
         $inventory->purchaseddate = $request->input('purchase');
-        $inventory->availabilty = 1;
         $inventory->cover_image = $fileNameToStore;
         if($request->hasFile('cover_image')){
             $inventory->cover_image = $fileNameToStore;
@@ -164,5 +165,21 @@ class InventoriesController extends Controller
     public function allint(){
         $inventories = Inventory::orderBy('updated_at','desc')->paginate(10);
         return view('inventories.allint')->with('inventories',$inventories);
+    }
+
+    public function issue(){
+        $inventories = Inventory::where('availability',1)->orderBy('updated_at','desc')->paginate(10);
+        $lecturers = Lecturer::all();
+        $supervisors = Supervisor::all();
+
+        $data = array(
+            'inventories' => $inventories,
+            'lecturers' => $lecturers,
+            'supervisors' => $supervisors
+        );
+        if(!auth()->user()->hasAccess(['issue-inventory'])){
+            return redirect('/inventories')->with('error','Unauthorized Page');
+        }
+        return view('inventories.issue')->with($data);
     }
 }

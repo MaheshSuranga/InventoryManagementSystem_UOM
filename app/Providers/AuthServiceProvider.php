@@ -43,7 +43,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasAccess(['delete-inventory']);
         });
 
-        Gate::define('issue-inventory', function($user, Inventory $inventory){
+        Gate::define('issue-inventory', function($user){
             $user->hasAccess(['issue-inventory']);
         });
 

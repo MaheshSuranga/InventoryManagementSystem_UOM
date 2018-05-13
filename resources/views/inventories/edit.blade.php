@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <h1>Edit Inventory</h1>
+    <div class="well" style="margin:20px 20px">
     {!! Form::open(['action' => ['InventoriesController@update', $inventory->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
             {{Form::label('name','Name')}}
@@ -32,4 +33,5 @@
         {{Form::hidden('_method','PUT')}}
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
+    </div>
 @endsection

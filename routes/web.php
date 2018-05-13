@@ -36,6 +36,7 @@ Route::group(['prefix'=>'inventories'],function(){
 
 Route::resource('lecturers', 'LecturersController');
 Route::get('/inventorie/allint', 'InventoriesController@allint');
+Route::get('/inventory/issue', 'InventoriesController@issue');
 
 Route::resource('supervisors', 'SupervisorsController');
 Route::resource('tos', 'TOsController');
