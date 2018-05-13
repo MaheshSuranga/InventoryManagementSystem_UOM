@@ -24,7 +24,9 @@ class RolesSeeder extends Seeder
                 'update-lecturer' => true,
                 'delete-lecturer' => true,
                 'update-supervisor' => true,
-                'delete-supervisor' => true
+                'delete-supervisor' => true,
+                'update-to' => true,
+                'delete-to' => true
             ])
         ]);
 

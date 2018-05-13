@@ -36,4 +36,7 @@ Route::group(['prefix'=>'inventories'],function(){
 
 Route::resource('lecturers', 'LecturersController');
 Route::get('/inventorie/allint', 'InventoriesController@allint');
+
+Route::resource('supervisors', 'SupervisorsController');
+Route::resource('tos', 'TOsController');
 //Route::get('/lecturers/{lecturer}/edit ', 'LecturersController@edit')->middleware('can:update-lecturer');

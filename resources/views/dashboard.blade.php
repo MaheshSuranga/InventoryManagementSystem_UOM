@@ -6,19 +6,6 @@
         @if(Auth::check())
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
-                {{-- <li {{ (Request::is('/') ? 'class="active"' : '') }}>
-                    <a href="{{ url ('') }}">Issue Inventory</a>
-                </li>
-                <li {{ (Request::is('*charts') ? 'class="active"' : '') }}>
-                    <a href="{{ url ('charts') }}"></i> Charts</a>
-                    <!-- /.nav-second-level -->
-                </li>
-                <li {{ (Request::is('*tables') ? 'class="active"' : '') }}>
-                    <a href="{{ url ('tables') }}"></i> Tables</a>
-                </li>
-                <li {{ (Request::is('*forms') ? 'class="active"' : '') }}>
-                    <a href="{{ url ('forms') }}"></i> Forms</a>
-                </li> --}}
                 <li >
                     <a href="#Inventory" data-toggle="collapse" aria-expanded="false">Inventory Management<span class="caret"></span></a>
                     <ul class="collapse nav nav-second-level" id="Inventory">
@@ -56,6 +43,15 @@
                     <ul class="collapse nav nav-second-level" id="Supervisor">
                         <li {{ (Request::is('*supervisors') ? 'class="active"' : '') }}>
                             <a href="{{ url ('supervisors') }}">All Supervisors (Edit/Delete)</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+                <li>
+                    <a href="#TO" data-toggle="collapse" aria-expanded="false">Technical Officer Management<span class="caret"></span></a>
+                    <ul class="collapse nav nav-second-level" id="TO">
+                        <li {{ (Request::is('*tos') ? 'class="active"' : '') }}>
+                            <a href="{{ url ('tos') }}">All Technical Officers (Edit/Delete)</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
