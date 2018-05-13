@@ -1,7 +1,10 @@
-@extends('layouts.app')
-@section('content')
-    <h1>Create New Inventory</h1>
-    <div class="well" style="margin:20px 150px">
+@extends('dashboard')
+@section('page_heading')
+    Create New Inventory
+@endsection
+@section('section')
+    
+    <div class="well" style="margin:20px 20px">
         {!! Form::open(['action' => 'InventoriesController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="form-group">
                 {{Form::label('name','Name')}}

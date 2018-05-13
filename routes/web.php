@@ -33,3 +33,7 @@ Route::group(['prefix'=>'inventories'],function(){
 
     Route::delete('/{inventory}/delete', 'InventoriesController@update')->middleware('can:delete-inventory');
 });
+
+Route::resource('lecturers', 'LecturersController');
+Route::get('/inventorie/allint', 'InventoriesController@allint');
+//Route::get('/lecturers/{lecturer}/edit ', 'LecturersController@edit')->middleware('can:update-lecturer');

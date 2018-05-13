@@ -15,11 +15,12 @@ class InventoriesController extends Controller
      */
     public function index()
     {
-        $inventories = Inventory::orderBy('updated_at','desc')->get();
+        $inventories = Inventory::where('availability',1)->orderBy('updated_at','desc')->paginate(10);
         //return $inventories;
         return view('inventories.index')->with('inventories',$inventories);
         //
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -158,5 +159,10 @@ class InventoriesController extends Controller
         $inventory->delete();
         return redirect('/inventories')->with('success', 'Inventory Removed');
         //
+    }
+
+    public function allint(){
+        $inventories = Inventory::orderBy('updated_at','desc')->paginate(10);
+        return view('inventories.allint')->with('inventories',$inventories);
     }
 }

@@ -21,6 +21,8 @@ class RolesSeeder extends Seeder
                 'update-inventory' => true,
                 'delete-inventory' => true,
                 'issue-inventory' => true,
+                'update-lecturer'=>true,
+                'delete-lecturer'=>true
             ])
         ]);
 
