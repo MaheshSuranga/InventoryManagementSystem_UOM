@@ -6,6 +6,9 @@
         @if(Auth::check())
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
+                <li {{ (Request::is('*history/notify') ? 'class="active"' : '') }}>
+                    <a href="{{ url ('history/notify') }}">Notifications</a>
+                </li>
                 <li >
                     <a href="#Inventory" data-toggle="collapse" aria-expanded="false">Inventory Management<span class="caret"></span></a>
                     <ul class="collapse nav nav-second-level" id="Inventory">
@@ -25,6 +28,12 @@
                         </li>
                         <li {{ (Request::is('*inventories/create') ? 'class="active"' : '') }}>
                             <a href="{{ url('inventories/create') }}">Add New Inventory</a>
+                        </li>
+                        <li {{ (Request::is('*inventory/unavailable') ? 'class="active"' : '') }}>
+                            <a href="{{ url('inventory/unavailable') }}">Return Inventory</a>
+                        </li>
+                        <li {{ (Request::is('*histories') ? 'class="active"' : '') }}>
+                            <a href="{{ url('histories') }}">Borrowing History</a>
                         </li>
                     </ul>
                         <!-- /.nav-second-level -->

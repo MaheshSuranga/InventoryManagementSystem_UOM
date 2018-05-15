@@ -5,14 +5,14 @@
 @section('section')
 
     <div class="well" style="margin:20px 20px">
-        <form class="form-horizontal" action="InventoriesController@sendemail" method="POST">
+        <form class="form-horizontal" action="/inventory/issue" method="POST">
             {{ csrf_field() }}
 
             <div class="form-group">
                 <label for="form-check" class="col-md-4 control-label">Select Inventories : </label>
                 @foreach($inventories as $inventory)
                 <div class="form-check col-md-6">
-                    <input class="form-check-input" type="checkbox" value="{{$inventory->id}}" id="{{$inventory->id}}">
+                    <input class="form-check-input" name="id[]" type="checkbox" value="{{$inventory->id}}" id="{{$inventory->id}}">
                     <label class="form-check-label" for="{{$inventory->id}}">{{$inventory->id}} {{$inventory->name}}</label>
                 </div>
                 @endforeach
@@ -21,13 +21,13 @@
             <div class="form-group">
                 <label for="index" class="col-md-4 control-label">Student Index : </label>
                 <div class="col-md-6">
-                    <input type="text" id="index">
+                    <input type="text" id="index" name="index">
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-md-4 control-label">Student Name : </label>
                 <div class="col-md-6">
-                    <input type="text" id="name">
+                    <input type="text" id="name" name="name">
                 </div>
             </div>
             <div class="form-group">

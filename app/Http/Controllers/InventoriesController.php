@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\User;
 use App\Inventory;
 use App\Lecturer;
 use App\Supervisor;
+use App\History;
 
 class InventoriesController extends Controller
 {
@@ -181,5 +184,60 @@ class InventoriesController extends Controller
             return redirect('/inventories')->with('error','Unauthorized Page');
         }
         return view('inventories.issue')->with($data);
+    }
+
+    public function sendemail(Request $request){
+        
+        $this->validate($request, [
+            //'id[]' => 'required',
+            'name' => 'required',
+            'index' => 'required',
+            'incharge' => 'required'
+        ]);
+        
+        $inventoriesid = $request->input('id');
+        $index = $request->input('index');
+        $name = $request->input('name');
+        $incharge = $request->input('incharge');
+
+        $inventories = array();
+        foreach($inventoriesid as $inventoryid){
+            $inventory= Inventory::find($inventoryid);
+            $inventory->send = 1;
+            $inventory->save();
+            array_push($inventories, $inventory);
+
+            $history = new History;
+            $history->intid = $inventory->id;
+            $history->intname = $inventory->name;
+            $history->index = $index;
+            $history->name = $name;
+            $history->approve = 0;
+            $history->save();
+        }
+
+        $user = User::find($incharge);
+        $useremail = $user->email;
+
+        $data = array('name'=> $name, 'index' => $index, 'inventories' => $inventories);
+        Mail::send('emails.mail', $data, function($message) use($useremail){
+            $message->to($useremail)->subject('Request for borrowing inventories from Embedded Lab');
+            $message->from('wasanthaedirisuriya65@gmail.com','Wasantha Edirisuriya');
+
+        });
+        return redirect('/inventories')->with('success', 'Email is sent');
+
+    }
+    public function unavailable(){
+        $inventories = Inventory::where('availability',0)->orderBy('updated_at','desc')->paginate(10);
+        return view('inventories.unavailable')->with('inventories',$inventories);
+    }
+
+    public function return($id){
+        $inventory = Inventory::find($id);
+        $inventory->availability = 1;
+        $inventory->save();
+
+        return redirect('/inventory/unavailable')->with('success', 'Inventory is returned to Lab');
     }
 }

@@ -37,7 +37,13 @@ Route::group(['prefix'=>'inventories'],function(){
 Route::resource('lecturers', 'LecturersController');
 Route::get('/inventorie/allint', 'InventoriesController@allint');
 Route::get('/inventory/issue', 'InventoriesController@issue');
+Route::post('/inventory/issue', 'InventoriesController@sendemail');
 
 Route::resource('supervisors', 'SupervisorsController');
 Route::resource('tos', 'TOsController');
+
+Route::resource('histories', 'HistoriesController');
+Route::get('/history/notify', 'HistoriesController@notifications');
+Route::get('/inventory/unavailable', 'InventoriesController@unavailable');
+Route::post('/{inventory}/return', 'InventoriesController@return');
 //Route::get('/lecturers/{lecturer}/edit ', 'LecturersController@edit')->middleware('can:update-lecturer');
