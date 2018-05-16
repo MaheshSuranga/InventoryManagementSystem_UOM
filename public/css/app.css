@@ -8393,11 +8393,6 @@ body {
   overflow: hidden;
 }
 
-.fullscreen-video-wrap video {
-  min-height: 100%;
-  min-width: 100%;
-}
-
 .fullscreen-video-wrap img {
   min-height: 100%;
   min-width: 100%;

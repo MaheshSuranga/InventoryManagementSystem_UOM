@@ -2,8 +2,7 @@
 @section('content')
     <header class="v-header container">
         <div class="fullscreen-video-wrap">
-            {{-- <img src="/storage/video_jif.gif" alt="" autoplay> --}}
-            <video src="/storage/video.mov" autoplay='true' loop='true'></video>
+          <img src="/storage/video_jif.gif" alt="" autoplay>
         </div>
         <div class="header-overlay"></div>
         <div class="header-content text-md-center text-center">
