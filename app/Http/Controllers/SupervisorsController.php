@@ -10,7 +10,7 @@ class SupervisorsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * Display all supervisors details.
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -48,6 +48,7 @@ class SupervisorsController extends Controller
      */
     public function show($id)
     {
+        //show the specific supervisor's details.
         $supervisor = Supervisor::find($id);
         return view('supervisors.show')->with('supervisor',$supervisor);
     }
@@ -61,6 +62,7 @@ class SupervisorsController extends Controller
     public function edit($id)
     {
         $supervisor = Supervisor::find($id);
+        //if user is not login redirect to all supervisors' detail page
         if(!auth()->user()->hasAccess(['update-supervisor'])){
             return redirect('/supervisors')->with('error','Unauthorized Page');
         }
@@ -76,12 +78,14 @@ class SupervisorsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //validate lecturer detail update form post method.
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
             'contact' => 'regex:/(0)[0-9]{9}/'
         ]);
 
+        //if new image is uploaded to change then store it in storage
         if($request->hasFile('cover_image')){
             $fileNamewithExt = $request->file('cover_image')->getClientOriginalName();
             $fileName = pathinfo($fileNamewithExt, PATHINFO_FILENAME);
@@ -90,17 +94,20 @@ class SupervisorsController extends Controller
             $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
         }
 
+        //retrive relevent supercisor from table 
         $supervisor= Supervisor::find($id);
         $supervisor->status = $request->input('status');
         $supervisor->name = $request->input('name');
         $supervisor->email = $request->input('email');
         $supervisor->contact = $request->input('contact');
         
+        //if form has cover image
         if($request->hasFile('cover_image')){
             $supervisor->cover_image = $fileNameToStore;
         }
         $supervisor->save();
 
+        //update user table with new lecturer's details
         $user = User::find($id);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
@@ -111,21 +118,26 @@ class SupervisorsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
+     * //delete lecturer from system
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $supervisor = Supervisor::find($id);
+
+        //if user is not logged in redirect to all supervisors' details page
         if(!auth()->user()->hasAccess(['delete-supervisor'])){
             return redirect('/supervisors')->with('error','Unauthorized Page');
         }
+
+        //if lecturer has uploaded the image delete it from storage
         if($supervisor->cover_image != 'noimage.jpg'){
             Storage::delete('public/cover_image/'.$supervisor->cover_image);
         }
         $supervisor->delete();
 
+        //delete lecturer from user table also
         $user = User::find($id);
         $user->delete();
 

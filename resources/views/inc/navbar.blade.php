@@ -26,7 +26,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="/lecturers">Lecturers</a></li>
                         <li><a href="/supervisors">Supervisors</a></li>
-                        <li><a href="">Technical Officers</a></li>
+                        <li><a href="/tos">Technical Officers</a></li>
                     </ul>
                 </li>
             </ul>
