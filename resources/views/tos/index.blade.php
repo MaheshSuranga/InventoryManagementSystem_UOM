@@ -7,7 +7,7 @@
         @foreach($TOs as $TO)
             <div class="well">
                 <div class="row">
-                    <a href="/lecturers/{{$TO->id}}">
+                    <a href="/tos/{{$TO->id}}">
                         <div class="col-md-8 col-sm-8">
                             <h3>{!!$TO->status!!}. {!!$TO->name!!}</h3>                          
                             <small>email : {!!$TO->email!!}</small><br>

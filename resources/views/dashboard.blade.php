@@ -6,9 +6,11 @@
         @if(Auth::check())
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
+                @can('update-inventory')
                 <li {{ (Request::is('*history/notify') ? 'class="active"' : '') }}>
                     <a href="{{ url ('history/notify') }}">Notifications</a>
                 </li>
+                @endcan
                 <li >
                     <a href="#Inventory" data-toggle="collapse" aria-expanded="false">Inventory Management<span class="caret"></span></a>
                     <ul class="collapse nav nav-second-level" id="Inventory">
@@ -23,15 +25,21 @@
                                 </li>
                             </ul>
                         </li>
+                        @can('update-inventory')
                         <li {{ (Request::is('*inventory/issue') ? 'class="active"' : '') }}>
                             <a href="{{ url ('inventory/issue' ) }}">Issue Inventory</a>
                         </li>
+                        @endcan
+                        @can('issue-inventory')
                         <li {{ (Request::is('*inventories/create') ? 'class="active"' : '') }}>
                             <a href="{{ url('inventories/create') }}">Add New Inventory</a>
                         </li>
+                        @endcan
+                        @can('update-inventory')
                         <li {{ (Request::is('*inventory/unavailable') ? 'class="active"' : '') }}>
                             <a href="{{ url('inventory/unavailable') }}">Return Inventory</a>
                         </li>
+                        @endcan
                         <li {{ (Request::is('*histories') ? 'class="active"' : '') }}>
                             <a href="{{ url('histories') }}">Borrowing History</a>
                         </li>

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+    <h1>Inventories List</h1>
+    <small style="color: red">**All inventories are displayed here</small>
     <div class="form-group">
         <div class="col-md 8 col-sm-8">
             <i class="glyphicon glyphicon-search " style="float:right"></i>

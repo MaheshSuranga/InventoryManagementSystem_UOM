@@ -14,7 +14,7 @@
         <a href="/tos/{{$TO->id}}/edit" class="btn btn-default">Edit</a>
     @endcan
     @can('delete-to')
-        {!!Form::open(['action' => ['TOs@destroy', $TO->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+        {!!Form::open(['action' => ['TOsController@destroy', $TO->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
             {{Form::hidden('_method', 'DELETE')}}
             {{Form::submit('Delete',['class' => 'btn btn-danger'])}}
         {!!Form::close()!!}

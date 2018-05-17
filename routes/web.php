@@ -15,7 +15,8 @@ Route::get('/', 'PagesController@index');
 
 Auth::routes();
 
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::get('/dashboard','DashboardController@index')->name('dashboard');
+
 Route::resource('inventories', 'InventoriesController');
 
 Route::group(['prefix'=>'inventories'],function(){

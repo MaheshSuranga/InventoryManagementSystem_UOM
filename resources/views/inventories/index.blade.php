@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <h1>Inventories List</h1>
+    <small style="color: red">**Only currently available inventories are displayed here</small>
     <?php $availability = 0; ?>
     @foreach($inventories as $inventory)
         @if($inventory->availability === 1)

@@ -19,7 +19,7 @@
                 <div class="panel-heading">Register</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
@@ -119,12 +119,6 @@
     
                                 <div class="col-md-6">
                                     <input id="designation" type="text" class="form-control" name="designation" value="{{ old('designation') }}" placeholder="Dr./ Eng./ Prof./ Associate Prof."required autofocus>
-    
-                                    @if ($errors->has('designation'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('designation') }}</strong>
-                                        </span>
-                                    @endif
                                 </div>
                         </div>
 
